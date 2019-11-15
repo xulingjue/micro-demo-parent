@@ -1,6 +1,0 @@
-server:
-    port: 8082
-micro-demo:
-    account-service-endpoint: http://localhost:8081
-    bot-service-endpoint: http://localhost:8082
-    mail-service-endpoint: http://localhost:8083

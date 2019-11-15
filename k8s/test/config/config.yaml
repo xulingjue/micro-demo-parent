@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: micro-config
+data:
+  SERVER_PORT: "80"
+  SPRING_PROFILES_ACTIVE: prod
+  ACCOUNT_SERVICE_ENDPOINT: http://account-service
+  BOT_SERVICE_ENDPOINT: http://bot-service
+  MAIL_SERVICE_ENDPOINT: http://mail-service

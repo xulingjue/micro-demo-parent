@@ -12,3 +12,5 @@ mvnw
 mvnw.cmd
 application.properties
 
+### Spring Dev Credentials ###
+config/*.yml
