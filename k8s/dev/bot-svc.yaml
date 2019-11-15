@@ -1,0 +1,36 @@
+# account svc k8s 部署文件
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: bot-svc-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: bot-svc
+        env: dev
+    spec:
+      containers:
+        - name: bot-svc
+          image: registry.mqcoding.com:5000/micro-demo-bot-svc:latest
+          imagePullPolicy: Never
+          ports:
+            - name: http-port
+              containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: common-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bot-service
+spec:
+  selector:
+    app: bot-svc
+    env: dev
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

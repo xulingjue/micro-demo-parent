@@ -1,3 +1,4 @@
+# 部署到k8s上的配置项
 apiVersion: v1
 kind: ConfigMap
 metadata:
