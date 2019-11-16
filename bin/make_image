@@ -1,0 +1,17 @@
+# 获取当前的脚本路径
+CURRENT_PATH=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+
+# 编译全部jar文件
+mvn clean install -DskipTests -f $CURRENT_PATH/../pom.xml
+
+# account-svc 镜像构建
+mvn dockerfile:build -DskipTests -f $CURRENT_PATH/../account-svc/pom.xml
+
+# bot-svc 镜像构建
+mvn dockerfile:build -DskipTests -f $CURRENT_PATH/../bot-svc/pom.xml
+
+# mail-svc 镜像构建
+mvn dockerfile:build -DskipTests -f $CURRENT_PATH/../mail-svc/pom.xml
+
+# gateway-svc 镜像构建
+mvn dockerfile:build -DskipTests -f $CURRENT_PATH/../gateway-svc/pom.xml

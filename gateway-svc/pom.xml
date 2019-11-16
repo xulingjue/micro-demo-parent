@@ -16,7 +16,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <docker.image.prefix>registry.mqcoding.com:5000</docker.image.prefix>
         <java.version>1.8</java.version>
+        <docker.image.tag>latest</docker.image.tag>
     </properties>
 
     <dependencies>
@@ -86,6 +88,21 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.3.6</version>
+                <configuration>
+                    <!--todo 推送到不同的库的时候要怎么处理？-->
+                    <repository>${docker.image.prefix}/micro-demo-${project.artifactId}</repository>
+                    <tag>${docker.image.tag}</tag>
+                    <buildArgs>
+                        <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
 </project>

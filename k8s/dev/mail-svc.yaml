@@ -20,7 +20,7 @@ spec:
               containerPort: 80
           envFrom:
             - configMapRef:
-                name: common-config
+                name: micro-config
 ---
 apiVersion: v1
 kind: Service
