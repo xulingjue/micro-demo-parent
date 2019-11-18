@@ -1,3 +1,5 @@
+# application.yml 本地开发环境，是否需要待确认
+
 server:
   port: 8081
 micro-demo:

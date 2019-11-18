@@ -4,8 +4,8 @@ kind: ConfigMap
 metadata:
   name: micro-config
 data:
-  SERVER_PORT: "80"
-  SPRING_PROFILES_ACTIVE: prod
+  SERVER_PORT: "80"                                         #服务端口
+  SPRING_PROFILES_ACTIVE: dev                               #指定在k8s上使用的配置环境
   ACCOUNT_SERVICE_ENDPOINT: http://account-service
   BOT_SERVICE_ENDPOINT: http://bot-service
   MAIL_SERVICE_ENDPOINT: http://mail-service
