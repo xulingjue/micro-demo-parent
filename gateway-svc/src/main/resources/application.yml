@@ -5,3 +5,14 @@ spring:
     active: dev
   application:
     name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
+      routes:
+        - id: account_route
+          uri: lb://account-service
+          predicates:
+          - Path=/v1/account/**

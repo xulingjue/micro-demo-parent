@@ -27,6 +27,6 @@ public class GreetingService {
 
         logger.info("this is the greeting service!");
 
-        mailClient.send(EmailRequest.builder().name("xulingjue").subject("subject").htmlBody("htmlBody").build());
+        mailClient.send(EmailRequest.builder().to("tester").name("xulingjue").subject("subject").htmlBody("htmlBody").build());
     }
 }
