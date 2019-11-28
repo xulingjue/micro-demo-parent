@@ -2,18 +2,19 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: mail-svc-deployment
+  name: account-svc-deployment-blue
 spec:
   replicas: 3
   template:
     metadata:
       labels:
-        app: mail-svc
+        app: account-svc
         env: dev
+        track: blue
     spec:
       containers:
-        - name: mail-svc
-          image: registry.mqcoding.com:5000/micro-demo-mail-svc:latest
+        - name: account-svc
+          image: registry.mqcoding.com:5000/micro-demo-account-svc:blue
           imagePullPolicy: Always
           ports:
             - name: http-port
@@ -23,11 +24,9 @@ spec:
                 name: micro-config
           env:
             - name: SW_AGENT_NAME
-              value: mail-svc
+              value: account-svc
             - name: SW_AGENT_COLLECTOR_BACKEND_SERVICES
               value: oap-server:11800
-            - name: SW_AGENT_SAMPLE
-              value: "10"
           volumeMounts:
           - mountPath: /etc/localtime
             name: dateconf
@@ -35,16 +34,3 @@ spec:
       - name: dateconf
         hostPath:
           path: /usr/share/zoneinfo/Asia/Shanghai
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mail-service
-spec:
-  selector:
-    app: mail-svc
-    env: dev
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80

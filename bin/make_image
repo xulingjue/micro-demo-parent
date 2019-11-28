@@ -1,17 +1,44 @@
+# 请输入镜像标签
+read -p "请输入镜像标签（通常为编译的分支名,默认为latest）: " TAG
+if [ -z "${TAG}" ];then
+	TAG=latest
+fi
+
+# 请输入构建服务
+read -p "请输入构建服务（account/bot/gateway/mail/ALL,默认为ALL）: " SVC
+if [ -z "${SVC}" ];then
+	SVC=ALL
+fi
+
 # 获取当前的脚本路径
 CURRENT_PATH=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 
 # 编译全部jar文件
-mvn clean install -DskipTests -f $CURRENT_PATH/../pom.xml
+mvn clean install -DskipTests -Ddocker.image.tag=blue -f $CURRENT_PATH/../pom.xml
+
+
+# 选择构建对应镜像
 
 # account-svc 镜像构建
-mvn dockerfile:build -DskipTests -f $CURRENT_PATH/../account-svc/pom.xml
+if [ $SVC == ALL ] || [ $SVC == account ]
+then
+    docker build -t registry.mqcoding.com:5000/micro-demo-account-svc:$TAG  -f $CURRENT_PATH/../account-svc/Dockerfile $CURRENT_PATH/../
+fi
 
 # bot-svc 镜像构建
-mvn dockerfile:build -DskipTests -f $CURRENT_PATH/../bot-svc/pom.xml
+if [ $SVC == ALL ] || [ $SVC == bot ]
+then
+    docker build -t registry.mqcoding.com:5000/micro-demo-bot-svc:$TAG  -f $CURRENT_PATH/../bot-svc/Dockerfile $CURRENT_PATH/../
+fi
 
 # mail-svc 镜像构建
-mvn dockerfile:build -DskipTests -f $CURRENT_PATH/../mail-svc/pom.xml
+if [ $SVC == ALL ] || [ $SVC == mail ]
+then
+    docker build -t registry.mqcoding.com:5000/micro-demo-mail-svc:$TAG  -f $CURRENT_PATH/../mail-svc/Dockerfile $CURRENT_PATH/../
+fi
 
 # gateway-svc 镜像构建
-mvn dockerfile:build -DskipTests -f $CURRENT_PATH/../gateway-svc/pom.xml
+if [ $SVC == ALL ] || [ $SVC == gateway ]
+then
+    docker build -t registry.mqcoding.com:5000/micro-demo-gateway-svc:$TAG  -f $CURRENT_PATH/../gateway-svc/Dockerfile $CURRENT_PATH/../
+fi

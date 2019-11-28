@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: gateway-svc-deployment
 spec:
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:
@@ -14,7 +14,7 @@ spec:
       containers:
         - name: gateway-svc
           image: registry.mqcoding.com:5000/micro-demo-gateway-svc:latest
-          imagePullPolicy: Always
+          imagePullPolicy: Never
           ports:
             - name: http-port
               containerPort: 80
@@ -24,17 +24,6 @@ spec:
           env:
             - name: SW_AGENT_NAME
               value: gateway-svc
-            - name: SW_AGENT_COLLECTOR_BACKEND_SERVICES
-              value: oap-server:11800
-            - name: SW_AGENT_SAMPLE
-              value: "10"
-          volumeMounts:
-          - mountPath: /etc/localtime
-            name: dateconf
-      volumes:
-      - name: dateconf
-        hostPath:
-          path: /usr/share/zoneinfo/Asia/Shanghai
 ---
 apiVersion: v1
 kind: Service
@@ -44,8 +33,9 @@ spec:
   selector:
     app: gateway-svc
     env: dev
+  type: NodePort
   ports:
     - protocol: TCP
       port: 80
       targetPort: 80
-  type: ClusterIP
+      nodePort: 30036

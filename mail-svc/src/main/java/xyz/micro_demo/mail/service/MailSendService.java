@@ -19,6 +19,6 @@ public class MailSendService {
 
     //@Async(AppConfig.ASYNC_EXECUTOR_NAME)
     public void sendMailAsync(EmailRequest req) {
-        logger.info("this is mail send service!");
+        logger.info("this is mail send service! BLUE");
     }
 }

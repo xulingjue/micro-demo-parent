@@ -1,0 +1,9 @@
+read -p "请输入镜像标签（通常为编译的分支名）: " TAG
+
+docker push registry.mqcoding.com:5000/micro-demo-bot-svc:$TAG
+
+docker push registry.mqcoding.com:5000/micro-demo-account-svc:$TAG
+
+docker push registry.mqcoding.com:5000/micro-demo-gateway-svc:$TAG
+
+docker push registry.mqcoding.com:5000/micro-demo-mail-svc:$TAG
