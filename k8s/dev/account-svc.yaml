@@ -19,6 +19,12 @@ spec:
           ports:
             - name: http-port
               containerPort: 80
+          readinessProbe
+            httpGet:
+              path: /actuator/health
+              port: 80
+            initialDelaySeconds: 90
+            timeoutSeconds: 10
           envFrom:
             - configMapRef:
                 name: micro-config

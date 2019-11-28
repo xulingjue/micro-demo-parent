@@ -1,7 +1,7 @@
 package xyz.micro_demo.account.dto;
 
 import lombok.*;
-import xyz.micro_demo.bot.common.api.BaseResponse;
+import xyz.micro_demo.common.api.BaseResponse;
 
 /**
  * GenericAccountResponse

@@ -5,7 +5,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import xyz.micro_demo.bot.BotConstant;
-import xyz.micro_demo.bot.common.api.BaseResponse;
+import xyz.micro_demo.common.api.BaseResponse;
 import xyz.micro_demo.bot.dto.GreetingRequest;
 
 /**

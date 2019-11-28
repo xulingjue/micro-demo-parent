@@ -9,7 +9,7 @@ import xyz.micro_demo.account.dto.AccountDto;
 import xyz.micro_demo.account.dto.GenericAccountResponse;
 import xyz.micro_demo.account.dto.VerifyPasswordRequest;
 import xyz.micro_demo.account.service.AccountService;
-import xyz.micro_demo.bot.common.auth.AuthConstant;
+import xyz.micro_demo.common.auth.AuthConstant;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -41,7 +41,7 @@ public class AccountController {
     }
 
     @PostMapping(path = "/verify_password")
-    GenericAccountResponse verifyPassword(@RequestHeader(AuthConstant.AUTHORIZATION_HEADER) String authz, @RequestBody @Valid VerifyPasswordRequest request) {
+    public GenericAccountResponse verifyPassword(@RequestHeader(AuthConstant.AUTHORIZATION_HEADER) String authz, @RequestBody @Valid VerifyPasswordRequest request) {
         return null;
     }
 

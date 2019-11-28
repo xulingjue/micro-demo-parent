@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import xyz.micro_demo.bot.common.api.BaseResponse;
+import xyz.micro_demo.common.api.BaseResponse;
 import xyz.micro_demo.bot.dto.GreetingRequest;
 import xyz.micro_demo.bot.service.GreetingService;
 

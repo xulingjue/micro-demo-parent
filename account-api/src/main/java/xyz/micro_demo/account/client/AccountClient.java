@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import xyz.micro_demo.account.AccountConstant;
 import xyz.micro_demo.account.dto.GenericAccountResponse;
 import xyz.micro_demo.account.dto.VerifyPasswordRequest;
-import xyz.micro_demo.bot.common.auth.AuthConstant;
+import xyz.micro_demo.common.auth.AuthConstant;
 
 import javax.validation.Valid;
 

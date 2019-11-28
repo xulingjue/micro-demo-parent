@@ -4,7 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import xyz.micro_demo.mail.MailConstant;
-import xyz.micro_demo.bot.common.api.BaseResponse;
+import xyz.micro_demo.common.api.BaseResponse;
 import xyz.micro_demo.mail.dto.EmailRequest;
 
 import javax.validation.Valid;
