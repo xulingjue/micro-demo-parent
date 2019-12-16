@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gray-release
+  annotations:
+      nginx.ingress.kubernetes.io/service-match: |      # 请求头中满足正则匹配foo=bar的请求才会被路由到新版本服务new-nginx中
+          gateway-service-release-191206: header("from", /^maqv_test$/)
+spec:
+  rules:
+  - host: gateway.mqcoding.com
+    http:
+      paths:
+      # 老版本服务
+      - path: /
+        backend:
+          serviceName: gateway-service-release-191205
+          servicePort: 80
+      # 新版本服务
+      - path: /
+        backend:
+          serviceName: gateway-service-release-191206
+          servicePort: 80

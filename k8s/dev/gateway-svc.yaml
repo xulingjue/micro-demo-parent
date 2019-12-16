@@ -4,7 +4,11 @@ kind: Deployment
 metadata:
   name: gateway-svc-deployment
 spec:
-  replicas: 3
+  replicas: 2
+  strategy:
+    rollingUpdate:  ##由于replicas为3,则整个升级,pod个数在2-4个之间
+      maxSurge: 1      #滚动升级时会先启动1个pod
+      maxUnavailable: 1 #滚动升级时允许的最大Unavailable的pod个数
   template:
     metadata:
       labels:
@@ -18,12 +22,15 @@ spec:
           ports:
             - name: http-port
               containerPort: 80
-          readinessProbe
+          readinessProbe:
             httpGet:
               path: /actuator/health
               port: 80
-            initialDelaySeconds: 90
-            timeoutSeconds: 10
+              scheme: HTTP
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 5
           envFrom:
             - configMapRef:
                 name: micro-config

@@ -2,19 +2,19 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: account-svc-deployment
+  name: account-svc-deployment-release-191206
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
-        app: account-svc
+        app: account-svc-release-191206
         env: dev
         track: stable
     spec:
       containers:
-        - name: account-svc
-          image: registry.mqcoding.com:5000/micro-demo-account-svc:latest
+        - name: account-svc-release-191206
+          image: registry.cn-shenzhen.aliyuncs.com/hw_test/micro-demo-account-svc:release-191206
           imagePullPolicy: Always
           ports:
             - name: http-port
@@ -30,10 +30,10 @@ spec:
             failureThreshold: 5
           envFrom:
             - configMapRef:
-                name: micro-config
+                name: micro-config-release-191206
           env:
             - name: SW_AGENT_NAME
-              value: account-svc
+              value: account-svc-release-191206
             - name: SW_AGENT_COLLECTOR_BACKEND_SERVICES
               value: oap-server:11800
             - name: SW_AGENT_SAMPLE
@@ -41,6 +41,8 @@ spec:
           volumeMounts:
           - mountPath: /etc/localtime
             name: dateconf
+      imagePullSecrets:
+        - name: aly-regsecret
       volumes:
       - name: dateconf
         hostPath:
@@ -49,10 +51,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: account-service
+  name: account-service-release-191206
 spec:
   selector:
-    app: account-svc
+    app: account-svc-release-191206
     env: dev
   ports:
     - protocol: TCP

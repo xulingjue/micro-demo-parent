@@ -2,24 +2,27 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: account-svc-deployment
+  name: gateway-svc-deployment-release-191206
 spec:
-  replicas: 2
+  replicas: 1
+  strategy:
+    rollingUpdate:  ##由于replicas为3,则整个升级,pod个数在2-4个之间
+      maxSurge: 1      #滚动升级时会先启动1个pod
+      maxUnavailable: 1 #滚动升级时允许的最大Unavailable的pod个数
   template:
     metadata:
       labels:
-        app: account-svc
+        app: gateway-svc-release-191206
         env: dev
-        track: stable
     spec:
       containers:
-        - name: account-svc
-          image: registry.mqcoding.com:5000/micro-demo-account-svc:latest
+        - name: gateway-svc-release-191206
+          image: registry.cn-shenzhen.aliyuncs.com/hw_test/micro-demo-gateway-svc:release-191206
           imagePullPolicy: Always
           ports:
             - name: http-port
               containerPort: 80
-          readinessProbe:    # 启动检查
+          readinessProbe:
             httpGet:
               path: /actuator/health
               port: 80
@@ -30,10 +33,10 @@ spec:
             failureThreshold: 5
           envFrom:
             - configMapRef:
-                name: micro-config
+                name: micro-config-release-191206
           env:
             - name: SW_AGENT_NAME
-              value: account-svc
+              value: gateway-svc-release-191206
             - name: SW_AGENT_COLLECTOR_BACKEND_SERVICES
               value: oap-server:11800
             - name: SW_AGENT_SAMPLE
@@ -41,6 +44,8 @@ spec:
           volumeMounts:
           - mountPath: /etc/localtime
             name: dateconf
+      imagePullSecrets:
+        - name: aly-regsecret
       volumes:
       - name: dateconf
         hostPath:
@@ -49,12 +54,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: account-service
+  name: gateway-service-release-191206
 spec:
   selector:
-    app: account-svc
+    app: gateway-svc-release-191206
     env: dev
   ports:
     - protocol: TCP
       port: 80
       targetPort: 80
+  type: ClusterIP

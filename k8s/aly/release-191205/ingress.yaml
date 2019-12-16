@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: gray-release
+spec:
+  rules:
+  - host: gateway.mqocoding.com
+    http:
+      paths:
+      # 老版本服务
+      - path: /
+        backend:
+          serviceName: gateway-service-release-191205
+          servicePort: 80

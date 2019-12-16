@@ -2,24 +2,23 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: account-svc-deployment
+  name: mail-svc-deployment-release-191206
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
-        app: account-svc
+        app: mail-svc-release-191206
         env: dev
-        track: stable
     spec:
       containers:
-        - name: account-svc
-          image: registry.mqcoding.com:5000/micro-demo-account-svc:latest
+        - name: mail-svc-release-191206
+          image: registry.cn-shenzhen.aliyuncs.com/hw_test/micro-demo-mail-svc:release-191206
           imagePullPolicy: Always
           ports:
             - name: http-port
               containerPort: 80
-          readinessProbe:    # 启动检查
+          readinessProbe:
             httpGet:
               path: /actuator/health
               port: 80
@@ -30,10 +29,10 @@ spec:
             failureThreshold: 5
           envFrom:
             - configMapRef:
-                name: micro-config
+                name: micro-config-release-191206
           env:
             - name: SW_AGENT_NAME
-              value: account-svc
+              value: mail-svc-release-191206
             - name: SW_AGENT_COLLECTOR_BACKEND_SERVICES
               value: oap-server:11800
             - name: SW_AGENT_SAMPLE
@@ -41,6 +40,8 @@ spec:
           volumeMounts:
           - mountPath: /etc/localtime
             name: dateconf
+      imagePullSecrets:
+        - name: aly-regsecret
       volumes:
       - name: dateconf
         hostPath:
@@ -49,10 +50,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: account-service
+  name: mail-service-release-191206
 spec:
   selector:
-    app: account-svc
+    app: mail-svc-release-191206
     env: dev
   ports:
     - protocol: TCP

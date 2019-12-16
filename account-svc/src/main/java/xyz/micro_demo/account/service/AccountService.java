@@ -35,7 +35,7 @@ public class AccountService {
         AccountDto accountDto = new AccountDto();
         accountDto.setId(userId);
         accountDto.setEmail("lingjue@qq.com");
-        accountDto.setName("BLUE");
+        accountDto.setName("release-191206");
 
         return accountDto;
     }

@@ -13,6 +13,6 @@ spring:
           lowerCaseServiceId: true
       routes:
         - id: account_route
-          uri: lb://account-service
+          uri: lb://${ACCOUNT_SERVICE_NAME}:80
           predicates:
           - Path=/v1/account/**
